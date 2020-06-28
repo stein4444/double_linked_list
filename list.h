@@ -2,6 +2,7 @@
 #include<iostream>
 using namespace std;
 
+
 template<class T_clas>
 class List
 {
@@ -28,6 +29,16 @@ public:
 		while (!IsEmpty())
 		{
 			DeleteHead();
+		}
+	}
+
+	List(const List& other)
+	{
+		Node* current = other.head;
+		while (current != nullptr)
+		{
+			AddToHead(current->value);
+			current = current->next;
 		}
 	}
 
@@ -264,4 +275,23 @@ public:
 			current = current->next;
 		} while (current->next != nullptr);
 	}
+	List operator-() const
+	{
+		List tmp;
+			for (Node* current = head; current->next != nullptr; current = current->next)
+			{
+				tmp.AddToHead(current->value);
+			}
+			return tmp;
+	}
+	List operator+(List& other) const
+	{
+		List tmp(*this);
+		Node* current = other.head;
+		for (int i = this->size; i < other.size; ++i) {
+			tmp.AddToTail(current->value);
+		}
+		return tmp;
+	}
 };
+
